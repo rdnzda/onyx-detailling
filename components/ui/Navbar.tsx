@@ -73,7 +73,7 @@ export default function Navbar() {
 
                 {/* Actions Mobile */}
                 <div className="flex flex-col items-center gap-6 mt-4">
-                    <a href="#contact" onClick={closeMenu} className="px-8 py-3 border border-onyx-chrome text-onyx-chrome font-bold tracking-widest rounded-sm hover:bg-onyx-chrome hover:text-black transition">
+                    <a href="#tarifs" onClick={closeMenu} className="px-8 py-3 border border-onyx-chrome text-onyx-chrome font-bold tracking-widest rounded-sm hover:bg-onyx-chrome hover:text-black transition">
                         CONTACTEZ-NOUS
                     </a>
                     
