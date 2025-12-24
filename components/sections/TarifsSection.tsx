@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Check, X, Sparkles, ShieldCheck, Droplets } from 'lucide-react';
-// Adapte le chemin selon ton projet
 import BookingModal from '../ui/BookingModal';
 import { Reveal } from "../ui/Reveal";
 import { motion } from "framer-motion";
@@ -56,18 +55,24 @@ export default function TarifsSection() {
             </p>
           </Reveal>
 
-          {/* --- SWITCHER RESPONSIVE --- */}
-          <Reveal delay={0.4} className='mx-auto w-full flex justify-center'>
-            {/* Ajout de flex-wrap et ajustement padding/text pour mobile */}
-            <div className="inline-flex flex-wrap justify-center items-center bg-[#1A1A1A] rounded-full p-1 mt-8 border border-white/10 gap-1 sm:gap-0">
+          {/* --- SWITCHER RESPONSIVE (CORRECTION FINALE) --- */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            // Correction ici : On retire le margin négatif et on déclenche dès que "un peu" (some) est visible
+            viewport={{ once: true, amount: "some" }} 
+            transition={{ duration: 0.6, ease: "easeOut" }} // Transition plus douce, sans délai agressif
+            className='mx-auto w-full flex justify-center relative z-10' // Ajout de z-10 pour forcer l'affichage au-dessus
+          >
+            <div className="flex flex-wrap justify-center items-center bg-[#1A1A1A] rounded-full p-1 mt-8 border border-white/10 gap-2 sm:gap-0 shadow-xl">
               {vehicleTypes.map((type) => (
                 <button
                   key={type}
                   onClick={() => setSelectedType(type)}
                   className={`
-                    px-4 sm:px-6 py-2 rounded-full text-[10px] sm:text-sm font-bold tracking-wide transition-all duration-300 uppercase
+                    px-4 sm:px-6 py-2 rounded-full text-[11px] sm:text-sm font-bold tracking-wide transition-all duration-300 uppercase
                     ${selectedType === type 
-                      ? 'bg-[#C5A086] text-black shadow-lg shadow-[#C5A086]/20' 
+                      ? 'bg-[#C5A086] text-black shadow-lg shadow-[#C5A086]/20 transform scale-105' 
                       : 'text-gray-500 hover:text-gray-300'}
                   `}
                 >
@@ -75,18 +80,17 @@ export default function TarifsSection() {
                 </button>
               ))}
             </div>
-          </Reveal>
+          </motion.div>
         </div>
 
         {/* --- GRID CARTES --- */}
-        {/* Changement ici: lg:grid-cols-3 au lieu de md:grid-cols-3 pour éviter l'écrasement sur tablette */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start lg:items-center">
           
           {/* PACK 1 : INTERIEUR */}
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="bg-[#121212] border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#C5A086]/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full"
           >
@@ -117,13 +121,12 @@ export default function TarifsSection() {
             </button>
           </motion.div>
 
-          {/* PACK 2 : CORRECTION (Mise en avant) */}
+          {/* PACK 2 : CORRECTION */}
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            // Correction ici: lg:scale-105 pour que le zoom ne se fasse que sur desktop
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.1 }} // Délai réduit
             className="relative bg-[#161616] border-2 border-[#C5A086] rounded-2xl p-6 md:p-8 transform lg:scale-105 z-10 shadow-2xl shadow-black/50 flex flex-col h-full my-4 lg:my-0"
           >
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#C5A086] text-black text-[10px] md:text-xs font-black px-4 py-1 rounded-full tracking-widest uppercase whitespace-nowrap">
@@ -161,8 +164,8 @@ export default function TarifsSection() {
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.2 }} // Délai réduit
             className="bg-[#121212] border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#C5A086]/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full"
           >
             <div className="mb-4 text-[#C5A086]">
