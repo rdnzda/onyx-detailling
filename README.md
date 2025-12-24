@@ -1,17 +1,20 @@
 
-# Onyx Detailing
 
-Bienvenue sur le site officiel d'Onyx Detailing, spécialiste du detailing automobile haut de gamme.
+# Onyx Detailing (Projet Portfolio)
+
+Ce projet est une réalisation fictive pour mon portfolio, inspirée d'un site de detailing automobile haut de gamme.
+
 
 ## Présentation
-Onyx Detailing propose des services professionnels de nettoyage, protection et rénovation esthétique pour véhicules. Découvrez nos prestations, réalisations et tarifs directement sur le site.
+Ce site vitrine présente des services professionnels de nettoyage, protection et rénovation esthétique pour véhicules, à titre d'exemple. Il met en avant la conception, le design et le développement web réalisés dans le cadre de mon portfolio.
+
 
 ## Fonctionnalités principales
-- Présentation de l'entreprise et de l'équipe
+- Présentation fictive de l'entreprise et de l'équipe
 - Liste des services de detailing (intérieur, extérieur, protection céramique, etc.)
 - Galerie de réalisations
 - Tarifs détaillés
-- Formulaire de réservation en ligne
+- Formulaire de réservation en ligne (exemple)
 - Informations légales (CGV, confidentialité, mentions légales)
 
 ## Technologies utilisées
@@ -36,8 +39,10 @@ Accédez au site sur [http://localhost:3000](http://localhost:3000).
 ## Déploiement
 Le site peut être déployé facilement sur [Vercel](https://vercel.com/).
 
+
 ## Contact
-Pour toute demande ou réservation, utilisez le formulaire en ligne ou contactez-nous via les réseaux sociaux.
+Ce site n'est pas affilié à une entreprise réelle. Pour toute question sur le projet ou mon profil, contactez-moi via le formulaire ou mes réseaux sociaux personnels.
+
 
 ---
-© Onyx Detailing - Tous droits réservés
+Ce projet est une démonstration pour portfolio. Aucun service réel n'est proposé.
