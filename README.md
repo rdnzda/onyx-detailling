@@ -1,48 +1,47 @@
+# Onyx Detailing (portfolio project)
 
+A **fictional** showcase website for a high-end car detailing business, built as a portfolio project. The company does not exist and no real service is offered.
 
-# Onyx Detailing (Projet Portfolio)
+🔗 **Live demo: [onyx-detailling.vercel.app](https://onyx-detailling.vercel.app)**
 
-Ce projet est une réalisation fictive pour mon portfolio, inspirée d'un site de detailing automobile haut de gamme.
+## Features
 
+- Presentation of the (fictional) company and team
+- Detailing services: interior, exterior, ceramic protection, etc.
+- Gallery of completed work
+- Detailed pricing
+- Online booking form (demo only)
+- Legal pages: terms of sale, privacy policy, legal notice
+- Responsive layout and animations (Framer Motion)
 
-## Présentation
-Ce site vitrine présente des services professionnels de nettoyage, protection et rénovation esthétique pour véhicules, à titre d'exemple. Il met en avant la conception, le design et le développement web réalisés dans le cadre de mon portfolio.
+## Tech stack
 
+- [Next.js](https://nextjs.org/) (App Router), React, TypeScript
+- Tailwind CSS
+- Framer Motion, Lucide icons
+- Font optimization with `next/font`
 
-## Fonctionnalités principales
-- Présentation fictive de l'entreprise et de l'équipe
-- Liste des services de detailing (intérieur, extérieur, protection céramique, etc.)
-- Galerie de réalisations
-- Tarifs détaillés
-- Formulaire de réservation en ligne (exemple)
-- Informations légales (CGV, confidentialité, mentions légales)
-
-## Technologies utilisées
-- [Next.js](https://nextjs.org/) (React, TypeScript)
-- CSS Modules
-- Optimisation des polices avec `next/font`
-
-## Démarrer le projet
+## Getting started
 
 ```bash
 npm install
 npm run dev
 ```
 
-Accédez au site sur [http://localhost:3000](http://localhost:3000).
+Then open [http://localhost:3000](http://localhost:3000).
 
-## Structure du projet
-- `app/` : Pages principales et légales
-- `components/` : Sections, UI et layout
-- `public/img/cars/` : Galerie photos des réalisations
+## Project structure
 
-## Déploiement
-Le site peut être déployé facilement sur [Vercel](https://vercel.com/).
+```text
+app/                 main and legal pages
+components/          sections, UI and layout
+public/img/cars/     gallery photos
+```
 
+## Deployment
 
-## Contact
-Ce site n'est pas affilié à une entreprise réelle. Pour toute question sur le projet ou mon profil, contactez-moi via le formulaire ou mes réseaux sociaux personnels.
-
+Deployed on [Vercel](https://vercel.com/).
 
 ---
-Ce projet est une démonstration pour portfolio. Aucun service réel n'est proposé.
+
+This website is a portfolio demo and is not affiliated with any real company.
