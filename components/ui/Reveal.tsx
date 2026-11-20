@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface RevealProps {
   children: React.ReactNode;
@@ -10,24 +10,26 @@ interface RevealProps {
   className?: string;
 }
 
-export const Reveal = ({ 
-  children, 
-  width = "fit-content", 
-  delay = 0.25,
+// Apparition discrète au scroll (léger fondu, sans glissement appuyé).
+export const Reveal = ({
+  children,
+  width = "fit-content",
+  delay = 0,
   duration = 0.5,
   className = ""
 }: RevealProps) => {
+  const reduce = useReducedMotion();
   return (
-    <div className={className} style={{ position: "relative", width, overflow: "hidden" }}>
+    <div className={className} style={{ position: "relative", width }}>
       <motion.div
         variants={{
-          hidden: { opacity: 0, y: 75 },
+          hidden: { opacity: 0, y: reduce ? 0 : 12 },
           visible: { opacity: 1, y: 0 },
         }}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
-        transition={{ duration, delay, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration, delay: Math.min(delay, 0.2), ease: "easeOut" }}
       >
         {children}
       </motion.div>

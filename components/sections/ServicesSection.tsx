@@ -1,112 +1,78 @@
-"use client";
-
-import { Shield, Sparkles, Droplets, MoveRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Reveal } from "../ui/Reveal";
-import { motion } from "framer-motion";
+
+const services = [
+  {
+    id: "01",
+    title: "Correction de Peinture",
+    description: "Élimination des micro-rayures et hologrammes pour retrouver une profondeur miroir. Polissage en 1, 2 ou 3 étapes.",
+    from: "450",
+  },
+  {
+    id: "02",
+    title: "Traitement Céramique",
+    description: "Protection hydrophobe longue durée (2 à 5 ans). Bouclier invisible contre les UV, pluies acides et contaminants.",
+    from: "600",
+    featured: true,
+  },
+  {
+    id: "03",
+    title: "Soin Intérieur & Cuir",
+    description: "Nettoyage vapeur, pressing des moquettes et soin nourrissant des cuirs. Finition mate et odeur du neuf.",
+    from: "250",
+  },
+];
 
 export default function Services() {
-  const services = [
-    {
-      id: "01",
-      title: "Correction de Peinture",
-      description: "Élimination des micro-rayures et hologrammes pour retrouver une profondeur miroir. Polissage en 1, 2 ou 3 étapes.",
-      icon: <Sparkles className="w-6 h-6" />,
-      price: "Dès 450€"
-    },
-    {
-      id: "02",
-      title: "Traitement Céramique",
-      description: "Protection hydrophobe longue durée (2 à 5 ans). Bouclier invisible contre les UV, pluies acides et contaminants.",
-      icon: <Shield className="w-6 h-6" />,
-      price: "Dès 600€",
-      featured: true // On mettra celui-ci en valeur
-    },
-    {
-      id: "03",
-      title: "Soin Intérieur & Cuir",
-      description: "Nettoyage vapeur, pressing des moquettes et soin nourrissant des cuirs. Finition mate et odeur du neuf.",
-      icon: <Droplets className="w-6 h-6" />,
-      price: "Dès 250€"
-    }
-  ];
-
   return (
-    <section id="services" className="relative z-10 max-w-7xl py-8 sm:py-8 md:py-16 lg:py-32 px-6 mx-auto">
-      
-      {/* 1. HEADER DE SECTION */}
-      <div className="max-w-7xl mx-auto mb-20 md:flex items-end justify-between border-b border-white/10 pb-8">
-        <div>
+    <section id="services" aria-labelledby="services-title" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 md:mb-16">
+        <div className="lg:col-span-7">
+          <p className="kicker mb-4">Nos expertises</p>
           <Reveal>
-            <span className="text-onyx-clay text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-              Nos Expertises
-            </span>
-            <h2 className="font-display text-5xl md:text-6xl text-onyx-sand">
-              Restaurer. <span className="italic text-white/50">Protéger.</span> <br />
-              Sublimer.
+            <h2 id="services-title" className="font-display uppercase text-5xl md:text-7xl text-paper leading-[0.9]">
+              Restaurer. Protéger.<br />
+              <span className="text-mute">Sublimer.</span>
             </h2>
           </Reveal>
         </div>
-        <Reveal delay={0.4}>
-          <p className="hidden md:block text-onyx-mist max-w-sm text-sm leading-relaxed mt-6 md:mt-0 text-right">
-            Nous ne faisons pas du nettoyage. Nous pratiquons la cosmétique automobile de haute précision pour collectionneurs exigeants.
-          </p>
-        </Reveal>
+        <p className="lg:col-span-4 lg:col-start-9 self-end text-mute leading-relaxed max-w-md">
+          Nous ne faisons pas du nettoyage. Nous pratiquons la cosmétique automobile de haute précision pour collectionneurs exigeants.
+        </p>
       </div>
 
-      {/* 2. GRILLE DES SERVICES */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-        {services.map((service, index) => (
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-            key={service.id}
-            className={`group relative p-8 md:p-10 rounded-sm border transition duration-500 ease-out
-              ${service.featured 
-                ? 'bg-white/5 border-onyx-clay/30 hover:border-onyx-clay hover:bg-white/10' 
-                : 'bg-transparent border-white/10 hover:border-onyx-clay/50 hover:bg-white/5'
-              }
-            `}
-          >
-            {/* Numéro discret en fond */}
-            <span className="absolute top-6 right-8 text-4xl font-display text-white/5 group-hover:text-onyx-clay/10 transition">
-              {service.id}
-            </span>
-
-            {/* Icone */}
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-8 transition duration-300
-              ${service.featured ? 'bg-onyx-clay text-white' : 'bg-white/5 text-onyx-clay group-hover:bg-onyx-clay group-hover:text-white'}
-            `}>
-              {service.icon}
-            </div>
-
-            {/* Titre */}
-            <h3 className="font-display text-3xl text-onyx-sand mb-4 group-hover:text-white transition">
-              {service.title}
-            </h3>
-
-            {/* Description */}
-            <p className="font-body text-onyx-mist text-sm leading-relaxed mb-8 border-l border-white/10 pl-4 group-hover:border-onyx-clay transition-colors">
-              {service.description}
-            </p>
-
-            {/* Footer Carte : Prix + Lien */}
-            <div className="flex items-center justify-between mt-auto">
-              <span className="font-body font-bold text-xs text-white/40 uppercase tracking-wider">
-                {service.price}
+      {/* Liste des prestations, façon fiche technique */}
+      <ol className="border-t border-paper/70">
+        {services.map((service) => (
+          <li key={service.id} className="group border-b border-line">
+            <div className="grid grid-cols-[2.5rem_1fr] md:grid-cols-[4rem_minmax(0,1.1fr)_minmax(0,1.4fr)_9rem] gap-x-4 md:gap-x-8 gap-y-3 py-8 md:py-10">
+              <span className={`font-display text-xl tabular ${service.featured ? "text-bronze" : "text-mute"}`}>
+                {service.id}
               </span>
-              
-              <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-onyx-clay group-hover:text-white transition group-hover:translate-x-2 duration-300">
-                <a href="#tarifs" className="flex items-center gap-2 w-full h-full">
-                  Découvrir <MoveRight className="w-3 h-3" />
+              <h3 className="font-display uppercase text-3xl md:text-4xl text-paper leading-none">
+                {service.title}
+              </h3>
+              <p className="col-start-2 md:col-start-auto text-mute leading-relaxed max-w-prose">
+                {service.description}
+              </p>
+              <div className="col-start-2 md:col-start-auto flex md:flex-col md:items-end items-baseline justify-between gap-2">
+                <p className="text-paper">
+                  <span className="text-sm text-mute">Dès </span>
+                  <span className="font-display text-3xl tabular">{service.from}&nbsp;€</span>
+                </p>
+                <a
+                  href="#tarifs"
+                  className="inline-flex items-center gap-1.5 text-sm text-paper underline underline-offset-4 decoration-line-strong hover:decoration-bronze hover:text-bronze"
+                  aria-label={`Découvrir les tarifs : ${service.title}`}
+                >
+                  Découvrir <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>
-              </button>
+              </div>
             </div>
-          </motion.div>
+          </li>
         ))}
-      </div>
-
+      </ol>
     </section>
   );
 }

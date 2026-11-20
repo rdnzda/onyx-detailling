@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Check, X, Sparkles, ShieldCheck, Droplets } from 'lucide-react';
+import { Check, Minus } from 'lucide-react';
 import BookingModal from '../ui/BookingModal';
 import { Reveal } from "../ui/Reveal";
-import { motion } from "framer-motion";
 
 // --- TYPES & DATA ---
 type VehicleType = 'citadine' | 'berline' | 'suv';
@@ -21,6 +20,64 @@ const pricingData: Record<VehicleType, PricingTier> = {
   suv: { interieur: 350, correction: 650, ceramique: 1200 },
 };
 
+type Feature = { label: string; included: boolean; strong?: boolean };
+
+interface Pack {
+  key: keyof PricingTier;
+  name: string;
+  subtitle: string;
+  bookingName: string;
+  cta: string;
+  signature?: boolean;
+  features: Feature[];
+}
+
+const packs: Pack[] = [
+  {
+    key: 'interieur',
+    name: 'Soin intérieur',
+    subtitle: "Rénovation de l’habitacle",
+    bookingName: 'Soin Intérieur',
+    cta: 'Réserver',
+    features: [
+      { label: 'Nettoyage Vapeur & Pressing', included: true },
+      { label: 'Soin nourrissant des cuirs', included: true },
+      { label: 'Finition mate & Odeur du neuf', included: true },
+      { label: 'Correction Carrosserie', included: false },
+      { label: 'Protection Céramique', included: false },
+    ],
+  },
+  {
+    key: 'correction',
+    name: 'Correction',
+    subtitle: 'Restaurer & Sublimer',
+    bookingName: 'Pack Correction (Signature)',
+    cta: 'Choisir ce pack',
+    signature: true,
+    features: [
+      { label: 'Lavage Detailing complet', included: true },
+      { label: 'Décontamination chimique', included: true },
+      { label: 'Polissage (Correction défauts)', included: true, strong: true },
+      { label: 'Profondeur & Effet Miroir', included: true },
+      { label: 'Cire de protection (6 mois)', included: true },
+    ],
+  },
+  {
+    key: 'ceramique',
+    name: 'Protection',
+    subtitle: 'Le Bouclier Ultime',
+    bookingName: 'Pack Protection Céramique',
+    cta: 'Nous contacter',
+    features: [
+      { label: 'Tout le pack Correction', included: true, strong: true },
+      { label: 'Traitement Céramique (2 à 5 ans)', included: true },
+      { label: 'Protection Hydrophobe', included: true },
+      { label: 'Bouclier Anti-UV & Acides', included: true },
+      { label: 'Garantie Certification', included: true },
+    ],
+  },
+];
+
 export default function TarifsSection() {
   const [selectedType, setSelectedType] = useState<VehicleType>('citadine');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +86,8 @@ export default function TarifsSection() {
   const getLabel = (type: VehicleType) => {
     switch (type) {
       case 'suv': return 'SUV / 4x4';
-      default: return type.toUpperCase();
+      case 'citadine': return 'Citadine';
+      default: return 'Berline';
     }
   };
 
@@ -41,166 +99,102 @@ export default function TarifsSection() {
   const vehicleTypes: VehicleType[] = ['citadine', 'berline', 'suv'];
 
   return (
-    <section className="w-full py-16 md:py-24 text-white" id="tarifs">
+    <section className="w-full py-20 md:py-28 border-t border-line" id="tarifs" aria-labelledby="tarifs-title">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* --- HEADER --- */}
-        <div className="text-center mb-12 md:mb-16">
-          <Reveal width="100%" className="flex flex-col items-center">
-            <h2 className="font-display text-4xl md:text-5xl text-onyx-sand mb-6 uppercase">
-              Nos <span className="text-onyx-chrome italic">Formules</span>
-            </h2>
-            <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto px-4">
+
+        {/* --- EN-TÊTE --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10 md:mb-14">
+          <div className="lg:col-span-7">
+            <p className="kicker mb-4">Tarifs</p>
+            <Reveal>
+              <h2 id="tarifs-title" className="font-display uppercase text-5xl md:text-7xl text-paper leading-[0.9]">
+                Nos formules
+              </h2>
+            </Reveal>
+            <p className="mt-6 text-mute leading-relaxed max-w-xl">
               Des solutions de cosmétique automobile haute précision, adaptées à la morphologie de votre véhicule.
             </p>
-          </Reveal>
+          </div>
 
-          {/* --- SWITCHER RESPONSIVE (CORRECTION FINALE) --- */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            // Correction ici : On retire le margin négatif et on déclenche dès que "un peu" (some) est visible
-            viewport={{ once: true, amount: "some" }} 
-            transition={{ duration: 0.6, ease: "easeOut" }} // Transition plus douce, sans délai agressif
-            className='mx-auto w-full flex justify-center relative z-10' // Ajout de z-10 pour forcer l'affichage au-dessus
-          >
-            <div className="flex flex-wrap justify-center items-center bg-[#1A1A1A] rounded-full p-1 mt-8 border border-white/10 gap-2 sm:gap-0 shadow-xl">
-              {vehicleTypes.map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setSelectedType(type)}
-                  className={`
-                    px-4 sm:px-6 py-2 rounded-full text-[11px] sm:text-sm font-bold tracking-wide transition-all duration-300 uppercase
-                    ${selectedType === type 
-                      ? 'bg-[#C5A086] text-black shadow-lg shadow-[#C5A086]/20 transform scale-105' 
-                      : 'text-gray-500 hover:text-gray-300'}
-                  `}
-                >
-                  {getLabel(type)}
-                </button>
-              ))}
+          {/* --- SÉLECTEUR DE GABARIT --- */}
+          <div className="lg:col-span-5 self-end">
+            <p id="gabarit-label" className="text-sm text-paper mb-3">1. Choisissez votre gabarit</p>
+            <div role="group" aria-labelledby="gabarit-label" className="grid grid-cols-3 border border-line-strong">
+              {vehicleTypes.map((type) => {
+                const active = selectedType === type;
+                return (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setSelectedType(type)}
+                    aria-pressed={active}
+                    className={`h-12 px-2 text-sm font-medium transition-colors border-r border-line-strong last:border-r-0
+                      ${active ? 'bg-paper text-ink' : 'text-mute hover:text-paper hover:bg-panel'}`}
+                  >
+                    {getLabel(type)}
+                  </button>
+                );
+              })}
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* --- GRID CARTES --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start lg:items-center">
-          
-          {/* PACK 1 : INTERIEUR */}
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.5 }}
-            className="bg-[#121212] border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#C5A086]/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full"
-          >
-            <div className="mb-4 text-[#C5A086]">
-                <Droplets size={32} />
-            </div>
-            <h3 className="text-xl md:text-2xl font-semibold mb-2">SOIN INTÉRIEUR</h3>
-            <p className="text-gray-500 text-sm mb-6">Rénovation de l'habitacle</p>
-            
-            <div className="text-4xl font-bold mb-8 flex items-start">
-              <span className="text-2xl mt-1 mr-1 text-[#C5A086]">€</span>
-              {pricingData[selectedType].interieur}
-            </div>
+        <p className="text-sm text-paper mb-3">2. Comparez les formules <span className="text-mute">— gabarit : {getLabel(selectedType)}</span></p>
 
-            <ul className="space-y-4 mb-8 text-gray-300 text-sm flex-grow">
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Nettoyage Vapeur & Pressing</span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Soin nourrissant des cuirs</span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Finition mate & Odeur du neuf</span></li>
-              <li className="flex items-start gap-3 text-gray-600"><X size={18} className="shrink-0 mt-0.5" /> <span>Correction Carrosserie</span></li>
-              <li className="flex items-start gap-3 text-gray-600"><X size={18} className="shrink-0 mt-0.5" /> <span>Protection Céramique</span></li>
-            </ul>
-
-            <button 
-              onClick={() => handleBooking('Soin Intérieur')}
-              className="block w-full py-3 border border-[#C5A086] text-[#C5A086] text-center font-bold tracking-wider rounded hover:bg-[#C5A086] hover:text-black transition-colors uppercase text-sm"
+        {/* --- GRILLE DES FORMULES --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 border border-line" aria-live="polite">
+          {packs.map((pack) => (
+            <article
+              key={pack.key}
+              className={`relative flex flex-col p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-line last:border-0
+                ${pack.signature ? 'bg-panel' : ''}`}
             >
-              Réserver
-            </button>
-          </motion.div>
+              {pack.signature && <div className="absolute inset-x-0 top-0 h-1 bg-bronze" aria-hidden="true" />}
 
-          {/* PACK 2 : CORRECTION */}
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.5, delay: 0.1 }} // Délai réduit
-            className="relative bg-[#161616] border-2 border-[#C5A086] rounded-2xl p-6 md:p-8 transform lg:scale-105 z-10 shadow-2xl shadow-black/50 flex flex-col h-full my-4 lg:my-0"
-          >
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#C5A086] text-black text-[10px] md:text-xs font-black px-4 py-1 rounded-full tracking-widest uppercase whitespace-nowrap">
-              Signature
-            </div>
+              <div className="flex items-baseline justify-between gap-4">
+                <h3 className="font-display uppercase text-3xl text-paper leading-none">{pack.name}</h3>
+                {pack.signature && <span className="text-xs font-medium text-bronze">Signature</span>}
+              </div>
+              <p className="mt-2 text-sm text-mute">{pack.subtitle}</p>
 
-            <div className="mb-4 text-[#C5A086]">
-                <Sparkles size={32} />
-            </div>
-            <h3 className="text-xl md:text-2xl font-semibold mb-2 text-white">CORRECTION</h3>
-            <p className="text-gray-400 text-sm mb-6">Restaurer & Sublimer</p>
-            
-            <div className="text-5xl font-bold mb-8 flex items-start text-white">
-              <span className="text-2xl mt-1 mr-1 text-[#C5A086]">€</span>
-              {pricingData[selectedType].correction}
-            </div>
+              <p className="mt-8 pb-8 border-b border-line text-paper">
+                <span className="font-display text-6xl md:text-7xl leading-none tabular">{pricingData[selectedType][pack.key]}</span>
+                <span className="ml-1 text-2xl text-mute">€</span>
+              </p>
 
-            <ul className="space-y-4 mb-8 text-gray-200 text-sm font-medium flex-grow">
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Lavage Detailing complet</span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Décontamination chimique</span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span><strong>Polissage (Correction défauts)</strong></span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Profondeur & Effet Miroir</span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Cire de protection (6 mois)</span></li>
-            </ul>
+              <ul className="mt-6 mb-8 space-y-3 text-sm flex-grow">
+                {pack.features.map((f) => (
+                  <li key={f.label} className={`flex items-start gap-3 ${f.included ? 'text-paper/90' : 'text-mute line-through decoration-line-strong'}`}>
+                    {f.included
+                      ? <Check size={16} className="text-bronze shrink-0 mt-0.5" aria-hidden="true" />
+                      : <Minus size={16} className="shrink-0 mt-0.5" aria-hidden="true" />}
+                    <span>
+                      {!f.included && <span className="sr-only">Non inclus : </span>}
+                      {f.strong ? <strong className="font-semibold text-paper">{f.label}</strong> : f.label}
+                    </span>
+                  </li>
+                ))}
+              </ul>
 
-            <button 
-              onClick={() => handleBooking('Pack Correction (Signature)')}
-              className="block w-full py-4 bg-[#C5A086] text-black text-center font-bold tracking-wider rounded hover:bg-white transition-colors uppercase text-sm"
-            >
-              Choisir ce pack
-            </button>
-          </motion.div>
-
-          {/* PACK 3 : CÉRAMIQUE */}
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.5, delay: 0.2 }} // Délai réduit
-            className="bg-[#121212] border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#C5A086]/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full"
-          >
-            <div className="mb-4 text-[#C5A086]">
-                <ShieldCheck size={32} />
-            </div>
-            <h3 className="text-xl md:text-2xl font-semibold mb-2">PROTECTION</h3>
-            <p className="text-gray-400 text-sm mb-6">Le Bouclier Ultime</p>
-            
-            <div className="text-4xl font-bold mb-8 flex items-baseline">
-              <span className="text-2xl mt-1 mr-1 text-[#C5A086]">€</span>
-              {pricingData[selectedType].ceramique}
-            </div>
-
-            <ul className="space-y-4 mb-8 text-gray-300 text-sm flex-grow">
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span><strong>Tout le pack Correction</strong></span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Traitement Céramique (2 à 5 ans)</span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Protection Hydrophobe</span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Bouclier Anti-UV & Acides</span></li>
-              <li className="flex items-start gap-3"><Check size={18} className="text-[#C5A086] shrink-0 mt-0.5" /> <span>Garantie Certification</span></li>
-            </ul>
-
-            <button 
-              onClick={() => handleBooking('Pack Protection Céramique')}
-              className="block w-full py-3 border border-white/20 text-white text-center font-bold tracking-wider rounded hover:bg-white hover:text-black transition-colors uppercase text-sm"
-            >
-              Nous contacter
-            </button>
-          </motion.div>
+              <button
+                type="button"
+                onClick={() => handleBooking(pack.bookingName)}
+                className={`h-12 w-full font-semibold text-sm transition-colors
+                  ${pack.signature
+                    ? 'bg-bronze text-ink hover:bg-paper'
+                    : 'border border-line-strong text-paper hover:border-paper'}`}
+              >
+                {pack.cta}
+              </button>
+            </article>
+          ))}
         </div>
       </div>
 
-      <BookingModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        selectedPack={chosenPack} 
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        selectedPack={chosenPack}
       />
 
     </section>

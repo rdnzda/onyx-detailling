@@ -1,52 +1,55 @@
 @import "tailwindcss";
 
-/* ===== THÈME TAILWIND V4 ===== */
+/* ===== THÈME : catalogue d'atelier — graphite, papier, une seule touche bronze ===== */
 @theme {
-  /* Palette Onyx - Noir & Gris Automobile */
-  --color-onyx-black: #0D0D0D;
-  --color-onyx-carbon: #1A1A1A;
-  --color-onyx-graphite: #2D2D2D;
-  --color-onyx-steel: #4A4A4A;
-  --color-onyx-chrome: #8A8A8A;
-  --color-onyx-silver: #B8B8B8;
-  --color-onyx-titanium: #E5E5E5;
-  --color-onyx-clay: #9C8575;
-  --color-onyx-sand: #E6DDD6;
-  --color-onyx-mist: #C5CBD3;
-  --color-onyx-paper: #F9F9F7;
-  
-  /* Polices - liées aux variables Next.js */
-  --font-family-display: var(--font-cormorant), "Cormorant Garamond", ui-serif, Georgia, serif;
-  --font-family-body: var(--font-montserrat), Montserrat, ui-sans-serif, system-ui, sans-serif;
+  /* Palette de travail */
+  --color-ink: #0f0f0e;        /* fond */
+  --color-panel: #181817;      /* surfaces */
+  --color-panel-2: #212120;    /* surfaces hautes */
+  --color-line: #2e2d2b;       /* filets */
+  --color-line-strong: #4a4845;
+  --color-mute: #9a968f;       /* texte secondaire (≈ 6.7:1 sur ink) */
+  --color-paper: #ece8e1;      /* texte principal */
+  --color-bronze: #c5a086;     /* accent, à doser */
+  --color-bronze-deep: #a8826a;
+
+  /* Anciens jetons conservés pour les pages légales */
+  --color-onyx-black: #0f0f0e;
+  --color-onyx-carbon: #1a1a1a;
+  --color-onyx-graphite: #2d2d2d;
+  --color-onyx-steel: #4a4a4a;
+  --color-onyx-chrome: #8a8a8a;
+  --color-onyx-silver: #b8b8b8;
+  --color-onyx-titanium: #e5e5e5;
+  --color-onyx-clay: #9c8575;
+  --color-onyx-sand: #e6ddd6;
+  --color-onyx-mist: #c5cbd3;
+  --color-onyx-paper: #f9f9f7;
 }
 
-/* ===== STYLES DE BASE ===== */
-@layer base {
-  *,
-  *::before,
-  *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+@theme inline {
+  --font-sans: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif;
+}
 
+@layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   body {
-    background-color: var(--color-onyx-black);
-    color: var(--color-onyx-carbon);
-    font-family: var(--font-family-body);
-    line-height: 1.6;
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-family-display);
-    font-weight: 400;
-    line-height: 1.2;
+    font-family: var(--font-display);
+    line-height: 1.05;
   }
 
   a {
@@ -64,23 +67,42 @@
     cursor: pointer;
     font-family: inherit;
   }
+
+  :focus-visible {
+    outline: 2px solid var(--color-bronze);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-bronze);
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
 }
 
-/* ===== UTILITAIRES PERSONNALISÉS ===== */
 @layer utilities {
+  /* Titrage condensé façon catalogue */
   .font-display {
-    font-family: var(--font-family-display);
+    font-family: var(--font-display);
+    font-stretch: 72%;
+    font-weight: 700;
   }
-
   .font-body {
-    font-family: var(--font-family-body);
+    font-family: var(--font-sans);
   }
-
   .text-balance {
     text-wrap: balance;
   }
-
-  .bg-gradient-onyx {
-    background: linear-gradient(180deg, var(--color-onyx-black) 0%, #1a1816 100%);
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  /* Étiquette de rubrique : petite, en casse normale */
+  .kicker {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-mute);
   }
 }

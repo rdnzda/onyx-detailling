@@ -1,9 +1,5 @@
-"use client";
-
 import Image from "next/image";
-import { Search } from "lucide-react";
 import { Reveal } from "../ui/Reveal";
-import { motion } from "framer-motion";
 
 export default function Realizations() {
   // Simule des photos de tailles différentes (Portrait/Paysage)
@@ -53,72 +49,45 @@ export default function Realizations() {
   ];
 
   return (
-    <section className="relative z-10 max-w-7xl py-8 sm:py-8 md:py-16 px-6 mx-auto" id="realisations">
-      
-      {/* 1. EN-TÊTE DISCRET */}
-      <div className="max-w-7xl mx-auto mb-16 text-center">
-        <Reveal width="100%" className="flex flex-col items-center">
-          <span className="text-onyx-clay text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-            Portfolio
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl text-onyx-sand uppercase">
-            Dernières <span className="italic font-light text-white/50">Signatures</span>
-          </h2>
-        </Reveal>
+    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 border-t border-line" id="realisations" aria-labelledby="realisations-title">
+
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <p className="kicker mb-4">Portfolio</p>
+          <Reveal>
+            <h2 id="realisations-title" className="font-display uppercase text-5xl md:text-7xl text-paper leading-[0.9]">
+              Dernières signatures
+            </h2>
+          </Reveal>
+        </div>
+        <a href="#" className="self-start md:self-end text-sm text-paper underline underline-offset-4 decoration-line-strong hover:decoration-paper">
+          Voir le portfolio complet sur Instagram
+        </a>
       </div>
 
-      {/* 2. LA GALERIE MASONRY */}
-      {/* L'astuce Tailwind est ici : columns-1, md:columns-2, lg:columns-3 */}
-      <div className="max-w-7xl mx-auto columns-1 md:columns-2 lg:columns-3 gap-6">
-        
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
         {projects.map((project, index) => (
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            key={project.id} 
-            className="relative group break-inside-avoid rounded-sm overflow-hidden cursor-pointer"
-          >
-            {/* Image */}
-            <div className="relative w-full">
-               <Image
+          <figure key={project.id} className="break-inside-avoid mb-8">
+            <div className="overflow-hidden bg-panel">
+              <Image
                 src={project.src}
-                alt={project.title}
+                alt={`${project.title} — ${project.category.toLowerCase()}`}
                 width={800}
                 height={600}
-                className="w-full h-auto transform group-hover:scale-105 transition duration-700 ease-in-out"
+                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                className="w-full h-auto"
               />
             </div>
-
-            {/* Overlay au survol (Effet Luxe) */}
-            <div className="absolute inset-0 bg-onyx-black/60 opacity-0 group-hover:opacity-100 transition duration-500 flex flex-col items-center justify-center text-center p-4">
-              
-              {/* Petite icône Loupe */}
-              <div className="w-10 h-10 rounded-full bg-onyx-clay text-white flex items-center justify-center mb-4 translate-y-4 group-hover:translate-y-0 transition duration-500 delay-100">
-                <Search className="w-4 h-4" />
-              </div>
-
-              {/* Textes */}
-              <span className="text-onyx-clay text-[10px] font-bold tracking-widest uppercase mb-2 translate-y-4 group-hover:translate-y-0 transition duration-500 delay-150">
-                {project.category}
+            <figcaption className="mt-3 flex items-baseline justify-between gap-4 border-b border-line pb-3">
+              <span className="font-display uppercase text-xl text-paper">{project.title}</span>
+              <span className="text-xs text-mute text-right">
+                <span className="tabular mr-2">{String(index + 1).padStart(2, "0")}</span>
+                {project.category.charAt(0) + project.category.slice(1).toLowerCase()}
               </span>
-              <h3 className="font-display text-2xl text-white translate-y-4 group-hover:translate-y-0 transition duration-500 delay-200">
-                {project.title}
-              </h3>
-            </div>
-          </motion.div>
+            </figcaption>
+          </figure>
         ))}
-
       </div>
-
-      {/* Bouton "Voir plus" (Optionnel) */}
-      <div className="text-center mt-16">
-        <button className="text-xs font-bold text-onyx-mist hover:text-white border-b border-onyx-mist hover:border-white pb-1 transition uppercase tracking-wider">
-            Voir le portfolio complet sur Instagram
-        </button>
-      </div>
-
     </section>
   );
 }
