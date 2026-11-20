@@ -4,26 +4,25 @@ export default function Location() {
 
       {/* Coordonnées */}
       <div className="lg:col-span-5 bg-panel p-6 md:p-10 order-2 lg:order-1">
-        <p className="kicker mb-4">Nous trouver</p>
-        <h2 id="contact-title" className="font-display uppercase text-4xl md:text-5xl text-paper leading-none mb-8">
+        <h2 id="contact-title" className="font-display text-4xl md:text-5xl text-onyx-sand leading-none mb-8">
           Studio Orléans
         </h2>
 
         <dl className="text-sm">
           <div className="grid grid-cols-[6.5rem_1fr] gap-4 py-4 border-t border-line">
-            <dt className="text-mute">Adresse</dt>
+            <dt className="text-onyx-silver">Adresse</dt>
             <dd className="text-paper">14 Avenue de la Libération,<br />45000 Orléans</dd>
           </div>
           <div className="grid grid-cols-[6.5rem_1fr] gap-4 py-4 border-t border-line">
-            <dt className="text-mute">Téléphone</dt>
+            <dt className="text-onyx-silver">Téléphone</dt>
             <dd className="text-paper tabular">+33 6 12 34 56 78</dd>
           </div>
           <div className="grid grid-cols-[6.5rem_1fr] gap-4 py-4 border-t border-line">
-            <dt className="text-mute">Email</dt>
+            <dt className="text-onyx-silver">Email</dt>
             <dd className="text-paper break-all">contact@onyx-detailing.com</dd>
           </div>
           <div className="grid grid-cols-[6.5rem_1fr] gap-4 py-4 border-y border-line">
-            <dt className="text-mute">Horaires</dt>
+            <dt className="text-onyx-silver">Horaires</dt>
             <dd className="text-paper tabular">Lun – Sam : 09h – 19h</dd>
           </div>
         </dl>

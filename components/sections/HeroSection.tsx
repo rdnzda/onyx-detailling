@@ -1,78 +1,91 @@
+"use client";
+
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 
+// Seule animation orchestrée du site : l'entrée du hero (titre, puis voiture).
 export default function Hero() {
+    const reduce = useReducedMotion();
+    const enter = (delay: number, y = 16) => ({
+        initial: reduce ? false : { opacity: 0, y },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] as const },
+    });
+
     return (
-        <section aria-labelledby="hero-title" className="relative pt-16">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section aria-labelledby="hero-title" className="relative pt-20">
+            <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
 
-                {/* Titre + accroche */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-8 pt-12 md:pt-14 pb-10 md:pb-12 items-end">
-                    <h1
-                        id="hero-title"
-                        className="lg:col-span-8 font-display uppercase text-paper leading-[0.86] tracking-[-0.01em] text-[clamp(3.4rem,10vw,9rem)]"
-                    >
-                        The Perfect<br />
-                        Shine<span className="text-bronze">.</span>
-                    </h1>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-10 pt-6 md:pt-12 lg:pt-20 pb-16 md:pb-24 items-center">
 
-                    <div className="lg:col-span-4 lg:pb-3 max-w-md">
-                        <p className="text-base md:text-lg text-paper/85 leading-relaxed">
-                            Correction de peinture, traitement céramique et soin intérieur —
-                            un studio de detailing à Orléans, sur rendez-vous.
-                        </p>
-                        <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
-                            <a
-                                href="#tarifs"
-                                className="group inline-flex items-center gap-3 h-12 px-6 bg-bronze text-ink font-semibold hover:bg-paper transition-colors"
-                            >
-                                Obtenir un devis
-                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-                            </a>
-                            <a href="#services" className="text-sm text-paper underline underline-offset-4 decoration-line-strong hover:decoration-paper">
-                                Voir les services
-                            </a>
+                    {/* La voiture d'abord : c'est le sujet */}
+                    <motion.figure {...enter(0.35, 0)} className="lg:col-span-7 lg:order-2">
+                        <div className="relative overflow-hidden border border-onyx-graphite bg-[linear-gradient(180deg,#2a2a2a_0%,#1d1d1d_62%,#161616_100%)]">
+                            <div className="absolute inset-x-0 bottom-[15%] h-px bg-gradient-to-r from-transparent via-onyx-steel to-transparent" aria-hidden="true" />
+                            <div className="relative aspect-[16/9] mx-[4%] my-[2%]">
+                                <Image
+                                    src="/img/cars/porsche.png"
+                                    alt="Porsche 911 blanche, carrosserie polie, vue de trois quarts avant"
+                                    fill
+                                    priority
+                                    sizes="(min-width: 1024px) 700px, 100vw"
+                                    className="object-cover"
+                                />
+                            </div>
                         </div>
+                    </motion.figure>
+
+                    <div className="lg:col-span-5 lg:order-1">
+                        <motion.h1
+                            {...enter(0)}
+                            id="hero-title"
+                            className="font-display uppercase text-onyx-titanium leading-[0.86] text-[clamp(3.75rem,14vw,7.25rem)]"
+                        >
+                            The<br />
+                            <span className="italic font-light pl-[0.35em]">Perfect</span><br />
+                            Shine
+                        </motion.h1>
+
+                        <motion.div {...enter(0.15)}>
+                            <p className="mt-8 flex items-center gap-4 font-display italic text-xl md:text-2xl text-onyx-sand">
+                                <span className="h-px w-12 bg-bronze shrink-0" aria-hidden="true" />
+                                We craft automotive perfection
+                            </p>
+
+                            <p className="mt-5 max-w-sm text-[0.9375rem] leading-relaxed text-onyx-silver">
+                                Confiez-nous votre voiture pour une correction de peinture, un traitement céramique ou un soin intérieur, dans notre studio d’Orléans.
+                            </p>
+
+                            <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-5">
+                                <a
+                                    href="#tarifs"
+                                    className="inline-flex items-center h-12 px-8 rounded-full bg-bronze text-onyx-black label-ui hover:bg-onyx-titanium transition-colors duration-300"
+                                >
+                                    Obtenir un devis
+                                </a>
+                                <a href="#services" className="text-sm text-onyx-silver hover:text-paper border-b border-onyx-steel hover:border-bronze pb-0.5 transition-colors">
+                                    Découvrir les services
+                                </a>
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
 
-                {/* Planche photo */}
-                <figure className="relative bg-panel border-y border-line sm:border-x overflow-hidden -mx-4 sm:mx-0">
-                    <div className="flex items-center justify-between px-4 sm:px-6 pt-4 text-xs text-mute">
-                        <span>Planche 01</span>
-                        <span className="tabular">Correction · Céramique · Intérieur</span>
-                    </div>
-                    <div className="relative mx-auto max-w-4xl aspect-[16/7] mt-2 mb-8 sm:mb-10">
-                        <div className="absolute inset-x-[-50vw] bottom-[5%] h-px bg-line-strong" aria-hidden="true" />
-                        <Image
-                            src="/img/cars/porsche.png"
-                            alt="Porsche 911 blanche vue de trois quarts avant"
-                            fill
-                            priority
-                            sizes="(min-width: 1024px) 900px, 100vw"
-                            className="object-cover"
-                        />
-                    </div>
-                </figure>
-
-                {/* Bandeau d'informations */}
-                <div className="grid grid-cols-1 md:grid-cols-3 border-b border-line">
-                    <div className="py-8 md:pr-8 border-b md:border-b-0 md:border-r border-line">
-                        <h2 className="font-display text-2xl text-paper">Premium Products Only.</h2>
-                        <p className="mt-2 text-sm text-mute max-w-xs">Partenaire officiel Gtechniq &amp; Rupes pour un résultat certifié.</p>
-                    </div>
-                    <div className="py-8 md:px-8 border-b md:border-b-0 md:border-r border-line flex items-baseline gap-4">
-                        <p className="font-display text-6xl leading-none text-paper tabular">500+</p>
-                        <p className="text-sm text-mute">Véhicules protégés</p>
-                    </div>
-                    <div className="py-8 md:pl-8 flex flex-col justify-between gap-4">
-                        <p className="text-lg text-paper leading-snug">
-                            Nous combinons esthétique &amp; protection.
-                        </p>
-                        <a href="#studio" className="self-start text-sm text-paper underline underline-offset-4 decoration-bronze hover:text-bronze">
-                            Voir le studio
-                        </a>
-                    </div>
+                {/* Engagements, en texte courant */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pb-6 text-[0.9375rem] leading-relaxed text-onyx-silver">
+                    <p>
+                        <span className="block font-display text-2xl text-onyx-titanium mb-1">Premium Products Only.</span>
+                        Partenaire officiel Gtechniq &amp; Rupes pour un résultat certifié.
+                    </p>
+                    <p>
+                        <span className="block font-display text-2xl text-onyx-titanium mb-1">500+ véhicules protégés.</span>
+                        En correction, en céramique ou en soin intérieur.
+                    </p>
+                    <p>
+                        <span className="block font-display text-2xl text-onyx-titanium mb-1">Esthétique &amp; protection.</span>
+                        Nous combinons les deux, dans un atelier pensé pour la précision.{" "}
+                        <a href="#studio" className="text-paper border-b border-bronze hover:text-bronze transition-colors">Voir le studio</a>
+                    </p>
                 </div>
             </div>
         </section>

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Reveal } from "../ui/Reveal";
 
 export default function Realizations() {
   // Simule des photos de tailles différentes (Portrait/Paysage)
@@ -49,26 +48,23 @@ export default function Realizations() {
   ];
 
   return (
-    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 border-t border-line" id="realisations" aria-labelledby="realisations-title">
+    <section className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-24 md:py-32" id="realisations" aria-labelledby="realisations-title">
 
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
-          <p className="kicker mb-4">Portfolio</p>
-          <Reveal>
-            <h2 id="realisations-title" className="font-display uppercase text-5xl md:text-7xl text-paper leading-[0.9]">
-              Dernières signatures
+          <h2 id="realisations-title" className="font-display text-5xl md:text-7xl text-onyx-sand leading-[0.95]">
+              Dernières réalisations
             </h2>
-          </Reveal>
         </div>
-        <a href="#" className="self-start md:self-end text-sm text-paper underline underline-offset-4 decoration-line-strong hover:decoration-paper">
+        <a href="#" className="self-start md:self-end text-sm text-paper border-b border-bronze hover:text-bronze transition-colors">
           Voir le portfolio complet sur Instagram
         </a>
       </div>
 
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
-        {projects.map((project, index) => (
+        {projects.map((project) => (
           <figure key={project.id} className="break-inside-avoid mb-8">
-            <div className="overflow-hidden bg-panel">
+            <div className="overflow-hidden bg-onyx-carbon border border-onyx-graphite">
               <Image
                 src={project.src}
                 alt={`${project.title} — ${project.category.toLowerCase()}`}
@@ -78,10 +74,9 @@ export default function Realizations() {
                 className="w-full h-auto"
               />
             </div>
-            <figcaption className="mt-3 flex items-baseline justify-between gap-4 border-b border-line pb-3">
-              <span className="font-display uppercase text-xl text-paper">{project.title}</span>
-              <span className="text-xs text-mute text-right">
-                <span className="tabular mr-2">{String(index + 1).padStart(2, "0")}</span>
+            <figcaption className="mt-4 flex items-baseline justify-between gap-4">
+              <span className="font-display text-2xl text-onyx-sand">{project.title}</span>
+              <span className="text-sm text-onyx-silver text-right">
                 {project.category.charAt(0) + project.category.slice(1).toLowerCase()}
               </span>
             </figcaption>

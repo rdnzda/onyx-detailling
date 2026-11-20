@@ -1,5 +1,3 @@
-import { ArrowRight } from "lucide-react";
-import { Reveal } from "../ui/Reveal";
 
 const services = [
   {
@@ -25,54 +23,42 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" aria-labelledby="services-title" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+    <section id="services" aria-labelledby="services-title" className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-24 md:py-32">
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 md:mb-16">
-        <div className="lg:col-span-7">
-          <p className="kicker mb-4">Nos expertises</p>
-          <Reveal>
-            <h2 id="services-title" className="font-display uppercase text-5xl md:text-7xl text-paper leading-[0.9]">
-              Restaurer. Protéger.<br />
-              <span className="text-mute">Sublimer.</span>
-            </h2>
-          </Reveal>
-        </div>
-        <p className="lg:col-span-4 lg:col-start-9 self-end text-mute leading-relaxed max-w-md">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 md:mb-20">
+        <h2 id="services-title" className="lg:col-span-7 font-display text-5xl md:text-7xl text-onyx-sand leading-[0.95]">
+          Restaurer. Protéger.<br />Sublimer.
+        </h2>
+        <p className="lg:col-span-4 lg:col-start-9 self-end text-[0.9375rem] text-onyx-silver leading-relaxed max-w-sm">
           Nous ne faisons pas du nettoyage. Nous pratiquons la cosmétique automobile de haute précision pour collectionneurs exigeants.
         </p>
       </div>
 
-      {/* Liste des prestations, façon fiche technique */}
-      <ol className="border-t border-paper/70">
+      <ul className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10 lg:gap-14">
         {services.map((service) => (
-          <li key={service.id} className="group border-b border-line">
-            <div className="grid grid-cols-[2.5rem_1fr] md:grid-cols-[4rem_minmax(0,1.1fr)_minmax(0,1.4fr)_9rem] gap-x-4 md:gap-x-8 gap-y-3 py-8 md:py-10">
-              <span className={`font-display text-xl tabular ${service.featured ? "text-bronze" : "text-mute"}`}>
-                {service.id}
-              </span>
-              <h3 className="font-display uppercase text-3xl md:text-4xl text-paper leading-none">
-                {service.title}
-              </h3>
-              <p className="col-start-2 md:col-start-auto text-mute leading-relaxed max-w-prose">
-                {service.description}
+          <li key={service.id} className="flex flex-col">
+            <span className={`block h-px w-12 mb-7 ${service.featured ? "bg-bronze" : "bg-onyx-steel"}`} aria-hidden="true" />
+            <h3 className="font-display text-3xl md:text-[2.125rem] text-onyx-sand leading-tight">
+              {service.title}
+            </h3>
+            <p className="mt-4 text-[0.9375rem] text-onyx-silver leading-relaxed max-w-[38ch] flex-grow">
+              {service.description}
+            </p>
+            <div className="mt-8 flex items-baseline justify-between gap-4">
+              <p className="text-onyx-silver text-sm">
+                À partir de <span className="font-display text-3xl text-paper tabular ml-1">{service.from}&nbsp;€</span>
               </p>
-              <div className="col-start-2 md:col-start-auto flex md:flex-col md:items-end items-baseline justify-between gap-2">
-                <p className="text-paper">
-                  <span className="text-sm text-mute">Dès </span>
-                  <span className="font-display text-3xl tabular">{service.from}&nbsp;€</span>
-                </p>
-                <a
-                  href="#tarifs"
-                  className="inline-flex items-center gap-1.5 text-sm text-paper underline underline-offset-4 decoration-line-strong hover:decoration-bronze hover:text-bronze"
-                  aria-label={`Découvrir les tarifs : ${service.title}`}
-                >
-                  Découvrir <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                </a>
-              </div>
+              <a
+                href="#tarifs"
+                className="text-sm text-paper border-b border-bronze hover:text-bronze transition-colors"
+                aria-label={`Voir les tarifs : ${service.title}`}
+              >
+                Voir les tarifs
+              </a>
             </div>
           </li>
         ))}
-      </ol>
+      </ul>
     </section>
   );
 }

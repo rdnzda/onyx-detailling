@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Check, Minus } from 'lucide-react';
 import BookingModal from '../ui/BookingModal';
-import { Reveal } from "../ui/Reveal";
 
 // --- TYPES & DATA ---
 type VehicleType = 'citadine' | 'berline' | 'suv';
@@ -38,7 +37,7 @@ const packs: Pack[] = [
     name: 'Soin intérieur',
     subtitle: "Rénovation de l’habitacle",
     bookingName: 'Soin Intérieur',
-    cta: 'Réserver',
+    cta: 'Réserver cette formule',
     features: [
       { label: 'Nettoyage Vapeur & Pressing', included: true },
       { label: 'Soin nourrissant des cuirs', included: true },
@@ -52,7 +51,7 @@ const packs: Pack[] = [
     name: 'Correction',
     subtitle: 'Restaurer & Sublimer',
     bookingName: 'Pack Correction (Signature)',
-    cta: 'Choisir ce pack',
+    cta: 'Réserver cette formule',
     signature: true,
     features: [
       { label: 'Lavage Detailing complet', included: true },
@@ -67,7 +66,7 @@ const packs: Pack[] = [
     name: 'Protection',
     subtitle: 'Le Bouclier Ultime',
     bookingName: 'Pack Protection Céramique',
-    cta: 'Nous contacter',
+    cta: 'Réserver cette formule',
     features: [
       { label: 'Tout le pack Correction', included: true, strong: true },
       { label: 'Traitement Céramique (2 à 5 ans)', included: true },
@@ -99,27 +98,26 @@ export default function TarifsSection() {
   const vehicleTypes: VehicleType[] = ['citadine', 'berline', 'suv'];
 
   return (
-    <section className="w-full py-20 md:py-28 border-t border-line" id="tarifs" aria-labelledby="tarifs-title">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full py-24 md:py-32 border-t border-line" id="tarifs" aria-labelledby="tarifs-title">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
 
         {/* --- EN-TÊTE --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10 md:mb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12 md:mb-16">
           <div className="lg:col-span-7">
-            <p className="kicker mb-4">Tarifs</p>
-            <Reveal>
-              <h2 id="tarifs-title" className="font-display uppercase text-5xl md:text-7xl text-paper leading-[0.9]">
-                Nos formules
-              </h2>
-            </Reveal>
-            <p className="mt-6 text-mute leading-relaxed max-w-xl">
+            <h2 id="tarifs-title" className="font-display text-5xl md:text-7xl text-onyx-sand leading-[0.95]">
+              Nos formules
+            </h2>
+            <p className="mt-6 text-[0.9375rem] text-onyx-silver leading-relaxed max-w-xl">
               Des solutions de cosmétique automobile haute précision, adaptées à la morphologie de votre véhicule.
             </p>
           </div>
 
           {/* --- SÉLECTEUR DE GABARIT --- */}
           <div className="lg:col-span-5 self-end">
-            <p id="gabarit-label" className="text-sm text-paper mb-3">1. Choisissez votre gabarit</p>
-            <div role="group" aria-labelledby="gabarit-label" className="grid grid-cols-3 border border-line-strong">
+            <p id="gabarit-label" className="flex items-baseline gap-3 text-sm text-paper mb-4">
+              <span className="font-display italic text-xl text-bronze">01</span> Choisissez votre gabarit
+            </p>
+            <div role="group" aria-labelledby="gabarit-label" className="grid grid-cols-3 gap-1 p-1 rounded-full border border-line-strong bg-panel">
               {vehicleTypes.map((type) => {
                 const active = selectedType === type;
                 return (
@@ -128,8 +126,8 @@ export default function TarifsSection() {
                     type="button"
                     onClick={() => setSelectedType(type)}
                     aria-pressed={active}
-                    className={`h-12 px-2 text-sm font-medium transition-colors border-r border-line-strong last:border-r-0
-                      ${active ? 'bg-paper text-ink' : 'text-mute hover:text-paper hover:bg-panel'}`}
+                    className={`h-11 px-2 rounded-full label-ui transition-colors duration-300
+                      ${active ? 'bg-bronze text-ink' : 'text-onyx-silver hover:text-paper hover:bg-panel-2'}`}
                   >
                     {getLabel(type)}
                   </button>
@@ -139,36 +137,39 @@ export default function TarifsSection() {
           </div>
         </div>
 
-        <p className="text-sm text-paper mb-3">2. Comparez les formules <span className="text-mute">— gabarit : {getLabel(selectedType)}</span></p>
+        <p className="flex items-baseline gap-3 text-sm text-paper mb-5">
+          <span className="font-display italic text-xl text-bronze">02</span>
+          Comparez les formules <span className="text-onyx-silver">(prix pour : {getLabel(selectedType)})</span>
+        </p>
 
         {/* --- GRILLE DES FORMULES --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 border border-line" aria-live="polite">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-0 lg:border lg:border-line" aria-live="polite">
           {packs.map((pack) => (
             <article
               key={pack.key}
-              className={`relative flex flex-col p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-line last:border-0
-                ${pack.signature ? 'bg-panel' : ''}`}
+              className={`relative flex flex-col p-7 md:p-9 border border-line lg:border-0 lg:border-r lg:last:border-r-0
+                ${pack.signature ? 'bg-panel-2 lg:-my-4 lg:border lg:border-bronze/70 lg:z-10' : 'bg-panel/50'}`}
             >
-              {pack.signature && <div className="absolute inset-x-0 top-0 h-1 bg-bronze" aria-hidden="true" />}
+              {pack.signature && <div className="absolute inset-x-0 top-0 h-[2px] bg-bronze" aria-hidden="true" />}
 
-              <div className="flex items-baseline justify-between gap-4">
-                <h3 className="font-display uppercase text-3xl text-paper leading-none">{pack.name}</h3>
-                {pack.signature && <span className="text-xs font-medium text-bronze">Signature</span>}
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="font-display text-3xl md:text-4xl text-onyx-sand leading-none">{pack.name}</h3>
+                {pack.signature && <span className="font-display italic text-lg text-bronze">Signature</span>}
               </div>
-              <p className="mt-2 text-sm text-mute">{pack.subtitle}</p>
+              <p className="mt-2 text-sm text-onyx-silver">{pack.subtitle}</p>
 
-              <p className="mt-8 pb-8 border-b border-line text-paper">
-                <span className="font-display text-6xl md:text-7xl leading-none tabular">{pricingData[selectedType][pack.key]}</span>
-                <span className="ml-1 text-2xl text-mute">€</span>
+              <p className="mt-8 pb-8 border-b border-line text-paper flex items-baseline">
+                <span className="font-display text-7xl leading-none tabular">{pricingData[selectedType][pack.key]}</span>
+                <span className="ml-2 font-display text-3xl text-bronze">€</span>
               </p>
 
-              <ul className="mt-6 mb-8 space-y-3 text-sm flex-grow">
+              <ul className="mt-7 mb-9 space-y-3.5 text-sm flex-grow">
                 {pack.features.map((f) => (
-                  <li key={f.label} className={`flex items-start gap-3 ${f.included ? 'text-paper/90' : 'text-mute line-through decoration-line-strong'}`}>
+                  <li key={f.label} className={`flex items-start gap-3 ${f.included ? 'text-paper/90' : 'text-onyx-chrome/80'}`}>
                     {f.included
                       ? <Check size={16} className="text-bronze shrink-0 mt-0.5" aria-hidden="true" />
                       : <Minus size={16} className="shrink-0 mt-0.5" aria-hidden="true" />}
-                    <span>
+                    <span className={f.included ? '' : 'line-through decoration-onyx-steel'}>
                       {!f.included && <span className="sr-only">Non inclus : </span>}
                       {f.strong ? <strong className="font-semibold text-paper">{f.label}</strong> : f.label}
                     </span>
@@ -179,10 +180,10 @@ export default function TarifsSection() {
               <button
                 type="button"
                 onClick={() => handleBooking(pack.bookingName)}
-                className={`h-12 w-full font-semibold text-sm transition-colors
+                className={`h-12 w-full rounded-full label-ui transition-colors duration-300
                   ${pack.signature
-                    ? 'bg-bronze text-ink hover:bg-paper'
-                    : 'border border-line-strong text-paper hover:border-paper'}`}
+                    ? 'bg-bronze text-ink hover:bg-onyx-titanium'
+                    : 'border border-bronze/70 text-bronze hover:bg-bronze hover:text-ink'}`}
               >
                 {pack.cta}
               </button>

@@ -8,7 +8,7 @@ import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-ink text-paper overflow-x-clip">
+    <div className="relative min-h-screen text-paper overflow-x-clip">
       <header>
         <Navbar />
       </header>

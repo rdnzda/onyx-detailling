@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Archivo } from "next/font/google";
+import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 
-const archivo = Archivo({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--font-archivo",
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
   display: "swap",
 });
 
@@ -20,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={archivo.variable}>
+    <html lang="fr" className={`${cormorant.variable} ${montserrat.variable}`}>
       <body className="antialiased">
         {children}
       </body>
